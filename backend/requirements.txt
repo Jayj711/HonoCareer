@@ -1,0 +1,16 @@
+fastapi
+uvicorn[standard]
+pydantic
+pydantic-settings
+SQLAlchemy[asyncio]
+asyncmy
+cryptography
+PyJWT
+bcrypt
+httpx
+pypdf
+python-docx
+python-pptx
+python-multipart
+pytest
+pytest-asyncio

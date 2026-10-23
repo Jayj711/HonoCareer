@@ -1,0 +1,2503 @@
+[
+  {
+    "name": "账号与用户信息",
+    "desc": "F-01~F-03、F-20、F-62",
+    "list": [
+      {
+        "query_path": {
+          "path": "/api/v1/auth/login",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "账号与用户信息"
+        ],
+        "_id": 900001,
+        "method": "POST",
+        "title": "登录",
+        "path": "/api/v1/auth/login",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"required\": [\"accessToken\", \"refreshToken\", \"expiresIn\", \"user\"], \"properties\": {\"accessToken\": {\"type\": \"string\"}, \"refreshToken\": {\"type\": \"string\"}, \"expiresIn\": {\"type\": \"integer\", \"description\": \"访问令牌剩余有效秒数\"}, \"user\": {\"type\": \"object\", \"required\": [\"userId\"], \"properties\": {\"userId\": {\"type\": \"string\"}, \"nickname\": {\"type\": \"string\"}, \"avatarUrl\": {\"type\": \"string\"}}, \"title\": \"UserVO\"}}, \"title\": \"LoginVO\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "{\"type\": \"object\", \"required\": [\"account\", \"password\", \"clientType\"], \"properties\": {\"account\": {\"type\": \"string\", \"description\": \"账号\"}, \"password\": {\"type\": \"string\", \"format\": \"password\", \"description\": \"密码\"}, \"clientType\": {\"type\": \"string\", \"enum\": [\"harmonyos\", \"android\", \"ios\"], \"description\": \"【待确认】命名未定：旧版 harmony vs 新版 harmonyos；是否补 web/miniapp\", \"title\": \"ClientType\"}}, \"title\": \"LoginDTO\"}",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/auth/refresh",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "账号与用户信息"
+        ],
+        "_id": 900002,
+        "method": "POST",
+        "title": "刷新令牌",
+        "path": "/api/v1/auth/refresh",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"required\": [\"accessToken\", \"refreshToken\", \"expiresIn\"], \"properties\": {\"accessToken\": {\"type\": \"string\"}, \"refreshToken\": {\"type\": \"string\"}, \"expiresIn\": {\"type\": \"integer\"}}, \"title\": \"TokenVO\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "{\"type\": \"object\", \"required\": [\"refreshToken\"], \"properties\": {\"refreshToken\": {\"type\": \"string\"}}, \"title\": \"RefreshTokenDTO\"}",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/auth/logout",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "账号与用户信息"
+        ],
+        "_id": 900003,
+        "method": "POST",
+        "title": "登出",
+        "path": "/api/v1/auth/logout",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"description\": \"业务数据\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": "使当前 refreshToken 失效；客户端清理令牌与用户作用域本地缓存索引"
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/auth/register",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "账号与用户信息"
+        ],
+        "_id": 900004,
+        "method": "POST",
+        "title": "注册（仅当开放自注册时启用）",
+        "path": "/api/v1/auth/register",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"required\": [\"userId\"], \"properties\": {\"userId\": {\"type\": \"string\"}}, \"title\": \"RegisterVO\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "{\"type\": \"object\", \"required\": [\"account\", \"password\"], \"properties\": {\"account\": {\"type\": \"string\"}, \"password\": {\"type\": \"string\", \"format\": \"password\"}, \"verificationCode\": {\"type\": \"string\", \"description\": \"验证码，渠道待确认 【待确认】缺发送验证码接口\"}}, \"title\": \"RegisterDTO\"}",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": "【待确认】缺少『发送验证码』接口；verificationCode 渠道与密码规则待产品确认"
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/users/me",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "账号与用户信息"
+        ],
+        "_id": 900005,
+        "method": "GET",
+        "title": "获取当前用户信息",
+        "path": "/api/v1/users/me",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"required\": [\"userId\"], \"properties\": {\"userId\": {\"type\": \"string\"}, \"nickname\": {\"type\": \"string\"}, \"avatarUrl\": {\"type\": \"string\"}, \"phoneMasked\": {\"type\": \"string\", \"description\": \"脱敏手机号\"}, \"emailMasked\": {\"type\": \"string\", \"description\": \"脱敏邮箱\"}, \"createdAt\": {\"type\": \"string\", \"format\": \"date-time\"}}, \"title\": \"UserMeVO\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/users/me",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "账号与用户信息"
+        ],
+        "_id": 900006,
+        "method": "PATCH",
+        "title": "更新当前用户信息",
+        "path": "/api/v1/users/me",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"description\": \"业务数据\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "{\"type\": \"object\", \"properties\": {\"nickname\": {\"type\": \"string\"}, \"avatarUrl\": {\"type\": \"string\"}}, \"description\": \"【待确认】required 为空，允许空 body，建议至少要求一个字段\", \"title\": \"UserMePatchDTO\"}",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": "仅允许更新 nickname、avatarUrl 等非认证字段"
+      }
+    ],
+    "index": 0,
+    "add_time": 1792494623,
+    "up_time": 1792494623
+  },
+  {
+    "name": "个人画像",
+    "desc": "F-04~F-12",
+    "list": [
+      {
+        "query_path": {
+          "path": "/api/v1/profiles",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "个人画像"
+        ],
+        "_id": 900007,
+        "method": "GET",
+        "title": "查询画像列表",
+        "path": "/api/v1/profiles",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [
+          {
+            "required": "0",
+            "name": "type",
+            "desc": "画像类型 枚举: employment/volunteer/club/defense",
+            "example": ""
+          },
+          {
+            "required": "0",
+            "name": "cursor",
+            "desc": "分页游标",
+            "example": ""
+          }
+        ],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"required\": [\"items\", \"nextCursor\", \"hasMore\"], \"properties\": {\"items\": {\"type\": \"array\", \"items\": {\"type\": \"object\", \"required\": [\"profileId\", \"type\", \"displayName\", \"completionStatus\", \"version\"], \"properties\": {\"profileId\": {\"type\": \"string\"}, \"type\": {\"type\": \"string\", \"enum\": [\"employment\", \"volunteer\", \"club\", \"defense\"], \"description\": \"defense 与前三种面试画像互不复用\", \"title\": \"ProfileType\"}, \"displayName\": {\"type\": \"string\"}, \"baseInfo\": {\"type\": \"object\", \"properties\": {\"name\": {\"type\": \"string\"}, \"school\": {\"type\": \"string\"}, \"department\": {\"type\": \"string\"}, \"major\": {\"type\": \"string\"}, \"degree\": {\"type\": \"string\"}, \"grade\": {\"type\": \"string\"}, \"enrollmentYear\": {\"type\": \"integer\"}, \"expectedGraduationYear\": {\"type\": \"integer\"}}, \"title\": \"BaseInfo\"}, \"detail\": {\"type\": \"object\", \"description\": \"画像明细，结构随 type 变化 【待确认】oneOf 按 type 对应；需确认各字段必填性\", \"title\": \"ProfileDetail\"}, \"completionStatus\": {\"type\": \"string\", \"enum\": [\"draft\", \"ready\"], \"title\": \"ProfileCompletionStatus\"}, \"version\": {\"type\": \"integer\", \"description\": \"版本号，用于乐观锁\"}, \"createdAt\": {\"type\": \"string\", \"format\": \"date-time\"}, \"updatedAt\": {\"type\": \"string\", \"format\": \"date-time\"}}, \"title\": \"Profile\"}}, \"nextCursor\": {\"type\": \"string\"}, \"hasMore\": {\"type\": \"boolean\"}}, \"title\": \"PageResultProfile\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/profiles",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "个人画像"
+        ],
+        "_id": 900008,
+        "method": "POST",
+        "title": "新增画像",
+        "path": "/api/v1/profiles",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"required\": [\"profileId\", \"completionStatus\", \"version\"], \"properties\": {\"profileId\": {\"type\": \"string\"}, \"completionStatus\": {\"type\": \"string\", \"enum\": [\"draft\", \"ready\"], \"title\": \"ProfileCompletionStatus\"}, \"version\": {\"type\": \"integer\"}}, \"title\": \"ProfileCreateVO\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "{\"type\": \"object\", \"required\": [\"type\", \"displayName\", \"detail\"], \"properties\": {\"type\": {\"type\": \"string\", \"enum\": [\"employment\", \"volunteer\", \"club\", \"defense\"], \"description\": \"defense 与前三种面试画像互不复用\", \"title\": \"ProfileType\"}, \"displayName\": {\"type\": \"string\"}, \"baseInfo\": {\"type\": \"object\", \"properties\": {\"name\": {\"type\": \"string\"}, \"school\": {\"type\": \"string\"}, \"department\": {\"type\": \"string\"}, \"major\": {\"type\": \"string\"}, \"degree\": {\"type\": \"string\"}, \"grade\": {\"type\": \"string\"}, \"enrollmentYear\": {\"type\": \"integer\"}, \"expectedGraduationYear\": {\"type\": \"integer\"}}, \"title\": \"BaseInfo\"}, \"detail\": {\"type\": \"object\", \"description\": \"画像明细，结构随 type 变化 【待确认】oneOf 按 type 对应；需确认各字段必填性\", \"title\": \"ProfileDetail\"}}, \"title\": \"ProfileCreateDTO\"}",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/profiles/matches",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "个人画像"
+        ],
+        "_id": 900009,
+        "method": "GET",
+        "title": "查询匹配画像",
+        "path": "/api/v1/profiles/matches",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [
+          {
+            "required": "0",
+            "name": "mode",
+            "desc": "模拟模式：interview/defense 枚举: interview/defense",
+            "example": ""
+          },
+          {
+            "required": "1",
+            "name": "scene",
+            "desc": "场景，与 mode 对应 面试为 employment/volunteer/club，答辩为 thesis/research/course",
+            "example": ""
+          }
+        ],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"array\", \"items\": {\"type\": \"object\", \"required\": [\"profileId\", \"type\"], \"properties\": {\"profileId\": {\"type\": \"string\"}, \"type\": {\"type\": \"string\", \"enum\": [\"employment\", \"volunteer\", \"club\", \"defense\"], \"description\": \"defense 与前三种面试画像互不复用\", \"title\": \"ProfileType\"}, \"matchReason\": {\"type\": \"string\"}, \"isRecommended\": {\"type\": \"boolean\"}}, \"title\": \"ProfileMatchVO\"}}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/profiles/{profileId}",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "var",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "个人画像"
+        ],
+        "_id": 900010,
+        "method": "GET",
+        "title": "查询画像详情",
+        "path": "/api/v1/profiles/{profileId}",
+        "req_params": [
+          {
+            "name": "profileId",
+            "desc": "画像 id",
+            "example": "prf_def_001"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"required\": [\"profileId\", \"type\", \"displayName\", \"completionStatus\", \"version\"], \"properties\": {\"profileId\": {\"type\": \"string\"}, \"type\": {\"type\": \"string\", \"enum\": [\"employment\", \"volunteer\", \"club\", \"defense\"], \"description\": \"defense 与前三种面试画像互不复用\", \"title\": \"ProfileType\"}, \"displayName\": {\"type\": \"string\"}, \"baseInfo\": {\"type\": \"object\", \"properties\": {\"name\": {\"type\": \"string\"}, \"school\": {\"type\": \"string\"}, \"department\": {\"type\": \"string\"}, \"major\": {\"type\": \"string\"}, \"degree\": {\"type\": \"string\"}, \"grade\": {\"type\": \"string\"}, \"enrollmentYear\": {\"type\": \"integer\"}, \"expectedGraduationYear\": {\"type\": \"integer\"}}, \"title\": \"BaseInfo\"}, \"detail\": {\"type\": \"object\", \"description\": \"画像明细，结构随 type 变化 【待确认】oneOf 按 type 对应；需确认各字段必填性\", \"title\": \"ProfileDetail\"}, \"completionStatus\": {\"type\": \"string\", \"enum\": [\"draft\", \"ready\"], \"title\": \"ProfileCompletionStatus\"}, \"version\": {\"type\": \"integer\", \"description\": \"版本号，用于乐观锁\"}, \"createdAt\": {\"type\": \"string\", \"format\": \"date-time\"}, \"updatedAt\": {\"type\": \"string\", \"format\": \"date-time\"}}, \"title\": \"Profile\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/profiles/{profileId}",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "个人画像"
+        ],
+        "_id": 900011,
+        "method": "PATCH",
+        "title": "修改画像",
+        "path": "/api/v1/profiles/{profileId}",
+        "req_params": [
+          {
+            "name": "profileId",
+            "desc": "画像 id",
+            "example": "prf_def_001"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"description\": \"业务数据\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "{\"type\": \"object\", \"required\": [\"version\"], \"properties\": {\"version\": {\"type\": \"integer\", \"description\": \"客户端持有的版本号，冲突返回 409 PROFILE_VERSION_CONFLICT\"}, \"displayName\": {\"type\": \"string\"}, \"baseInfo\": {\"type\": \"object\", \"properties\": {\"name\": {\"type\": \"string\"}, \"school\": {\"type\": \"string\"}, \"department\": {\"type\": \"string\"}, \"major\": {\"type\": \"string\"}, \"degree\": {\"type\": \"string\"}, \"grade\": {\"type\": \"string\"}, \"enrollmentYear\": {\"type\": \"integer\"}, \"expectedGraduationYear\": {\"type\": \"integer\"}}, \"title\": \"BaseInfo\"}, \"detail\": {\"type\": \"object\", \"description\": \"画像明细，结构随 type 变化 【待确认】oneOf 按 type 对应；需确认各字段必填性\", \"title\": \"ProfileDetail\"}}, \"title\": \"ProfilePatchDTO\"}",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/profiles/{profileId}",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "var",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "个人画像"
+        ],
+        "_id": 900012,
+        "method": "DELETE",
+        "title": "删除画像",
+        "path": "/api/v1/profiles/{profileId}",
+        "req_params": [
+          {
+            "name": "profileId",
+            "desc": "画像 id",
+            "example": "prf_def_001"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"description\": \"业务数据\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/profiles/{profileId}/resume-import",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "个人画像"
+        ],
+        "_id": 900013,
+        "method": "POST",
+        "title": "从简历导入画像字段",
+        "path": "/api/v1/profiles/{profileId}/resume-import",
+        "req_params": [
+          {
+            "name": "profileId",
+            "desc": "画像 id",
+            "example": "prf_def_001"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"required\": [\"profileId\", \"version\"], \"properties\": {\"profileId\": {\"type\": \"string\"}, \"importedFields\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}, \"version\": {\"type\": \"integer\"}}, \"title\": \"ResumeImportVO\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "{\"type\": \"object\", \"required\": [\"resumeId\", \"selectedFields\"], \"properties\": {\"resumeId\": {\"type\": \"string\"}, \"selectedFields\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}, \"description\": \"仅导入用户勾选的字段\"}}, \"title\": \"ResumeImportDTO\"}",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      }
+    ],
+    "index": 0,
+    "add_time": 1792494623,
+    "up_time": 1792494623
+  },
+  {
+    "name": "简历管理与解析",
+    "desc": "F-12~F-17",
+    "list": [
+      {
+        "query_path": {
+          "path": "/api/v1/resumes",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "简历管理与解析"
+        ],
+        "_id": 900014,
+        "method": "POST",
+        "title": "上传简历",
+        "path": "/api/v1/resumes",
+        "req_params": [],
+        "req_body_form": [
+          {
+            "required": "1",
+            "name": "file",
+            "type": "file",
+            "desc": "简历文件（PDF/DOC/DOCX）"
+          }
+        ],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Content-Type",
+            "value": "multipart/form-data"
+          },
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "form",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"required\": [\"resumeId\", \"fileName\", \"status\"], \"properties\": {\"resumeId\": {\"type\": \"string\"}, \"fileName\": {\"type\": \"string\"}, \"mimeType\": {\"type\": \"string\"}, \"status\": {\"type\": \"string\", \"enum\": [\"uploaded\", \"queued\", \"processing\", \"review_required\", \"confirmed\", \"failed\"], \"title\": \"ResumeStatus\"}}, \"title\": \"ResumeVO\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/resumes",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "简历管理与解析"
+        ],
+        "_id": 900015,
+        "method": "GET",
+        "title": "查询简历列表",
+        "path": "/api/v1/resumes",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [
+          {
+            "required": "0",
+            "name": "cursor",
+            "desc": "分页游标",
+            "example": ""
+          }
+        ],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"required\": [\"items\", \"nextCursor\", \"hasMore\"], \"properties\": {\"items\": {\"type\": \"array\", \"items\": {\"type\": \"object\", \"required\": [\"resumeId\", \"fileName\", \"status\"], \"properties\": {\"resumeId\": {\"type\": \"string\"}, \"fileName\": {\"type\": \"string\"}, \"mimeType\": {\"type\": \"string\"}, \"size\": {\"type\": \"integer\", \"format\": \"int64\"}, \"status\": {\"type\": \"string\", \"enum\": [\"uploaded\", \"queued\", \"processing\", \"review_required\", \"confirmed\", \"failed\"], \"title\": \"ResumeStatus\"}, \"createdAt\": {\"type\": \"string\", \"format\": \"date-time\"}}, \"title\": \"Resume\"}}, \"nextCursor\": {\"type\": \"string\"}, \"hasMore\": {\"type\": \"boolean\"}}, \"title\": \"PageResultResume\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/resumes/{resumeId}",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "var",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "简历管理与解析"
+        ],
+        "_id": 900016,
+        "method": "GET",
+        "title": "查询简历详情",
+        "path": "/api/v1/resumes/{resumeId}",
+        "req_params": [
+          {
+            "name": "resumeId",
+            "desc": "简历 id",
+            "example": "res_001"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"required\": [\"resumeId\", \"fileName\", \"status\"], \"properties\": {\"resumeId\": {\"type\": \"string\"}, \"fileName\": {\"type\": \"string\"}, \"mimeType\": {\"type\": \"string\"}, \"size\": {\"type\": \"integer\", \"format\": \"int64\"}, \"status\": {\"type\": \"string\", \"enum\": [\"uploaded\", \"queued\", \"processing\", \"review_required\", \"confirmed\", \"failed\"], \"title\": \"ResumeStatus\"}, \"createdAt\": {\"type\": \"string\", \"format\": \"date-time\"}}, \"title\": \"Resume\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/resumes/{resumeId}",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "var",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "简历管理与解析"
+        ],
+        "_id": 900017,
+        "method": "DELETE",
+        "title": "删除简历",
+        "path": "/api/v1/resumes/{resumeId}",
+        "req_params": [
+          {
+            "name": "resumeId",
+            "desc": "简历 id",
+            "example": "res_001"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"description\": \"业务数据\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/resumes/{resumeId}/parse",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "var",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "简历管理与解析"
+        ],
+        "_id": 900018,
+        "method": "POST",
+        "title": "触发简历解析",
+        "path": "/api/v1/resumes/{resumeId}/parse",
+        "req_params": [
+          {
+            "name": "resumeId",
+            "desc": "简历 id",
+            "example": "res_001"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"required\": [\"jobId\", \"status\"], \"properties\": {\"jobId\": {\"type\": \"string\"}, \"status\": {\"type\": \"string\", \"enum\": [\"queued\", \"processing\", \"review_required\", \"confirmed\", \"failed\"], \"title\": \"ParseJobStatus\"}}, \"title\": \"ParseJobVO\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/resumes/{resumeId}/parse",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "var",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "简历管理与解析"
+        ],
+        "_id": 900019,
+        "method": "GET",
+        "title": "查询简历解析结果",
+        "path": "/api/v1/resumes/{resumeId}/parse",
+        "req_params": [
+          {
+            "name": "resumeId",
+            "desc": "简历 id",
+            "example": "res_001"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"required\": [\"status\"], \"properties\": {\"status\": {\"type\": \"string\", \"enum\": [\"queued\", \"processing\", \"review_required\", \"confirmed\", \"failed\"], \"title\": \"ParseJobStatus\"}, \"education\": {\"type\": \"array\", \"items\": {\"type\": \"object\", \"additionalProperties\": true, \"description\": \"结构未定的自由对象，联调前需具体化\", \"title\": \"FreeObject\"}, \"description\": \"【待确认】education 元素结构未定\"}, \"projects\": {\"type\": \"array\", \"items\": {\"type\": \"object\", \"additionalProperties\": true, \"description\": \"结构未定的自由对象，联调前需具体化\", \"title\": \"FreeObject\"}, \"description\": \"【待确认】projects 元素结构未定\"}, \"skills\": {\"type\": \"array\", \"items\": {\"type\": \"object\", \"additionalProperties\": true, \"description\": \"结构未定的自由对象，联调前需具体化\", \"title\": \"FreeObject\"}, \"description\": \"【待确认】skills 元素为对象还是字符串未定（v2.0 示例为字符串数组）\"}, \"certificates\": {\"type\": \"array\", \"items\": {\"type\": \"object\", \"additionalProperties\": true, \"description\": \"结构未定的自由对象，联调前需具体化\", \"title\": \"FreeObject\"}, \"description\": \"【待确认】certificates 元素为对象还是字符串未定\"}, \"warnings\": {\"type\": \"array\", \"items\": {\"type\": \"object\", \"additionalProperties\": true, \"description\": \"结构未定的自由对象，联调前需具体化\", \"title\": \"FreeObject\"}, \"description\": \"【待确认】warnings 元素结构未定\"}}, \"title\": \"ParseResultVO\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/resumes/{resumeId}/parsed-content",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "简历管理与解析"
+        ],
+        "_id": 900020,
+        "method": "PATCH",
+        "title": "编辑简历解析内容",
+        "path": "/api/v1/resumes/{resumeId}/parsed-content",
+        "req_params": [
+          {
+            "name": "resumeId",
+            "desc": "简历 id",
+            "example": "res_001"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"description\": \"业务数据\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "{\"type\": \"object\", \"properties\": {\"education\": {\"type\": \"array\", \"items\": {\"type\": \"object\", \"additionalProperties\": true, \"description\": \"结构未定的自由对象，联调前需具体化\", \"title\": \"FreeObject\"}}, \"projects\": {\"type\": \"array\", \"items\": {\"type\": \"object\", \"additionalProperties\": true, \"description\": \"结构未定的自由对象，联调前需具体化\", \"title\": \"FreeObject\"}}, \"skills\": {\"type\": \"array\", \"items\": {\"type\": \"object\", \"additionalProperties\": true, \"description\": \"结构未定的自由对象，联调前需具体化\", \"title\": \"FreeObject\"}}, \"certificates\": {\"type\": \"array\", \"items\": {\"type\": \"object\", \"additionalProperties\": true, \"description\": \"结构未定的自由对象，联调前需具体化\", \"title\": \"FreeObject\"}}}, \"description\": \"【待确认】字段元素结构与必填性未定\", \"title\": \"ResumeContentPatchDTO\"}",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/resumes/{resumeId}/confirm",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "var",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "简历管理与解析"
+        ],
+        "_id": 900021,
+        "method": "POST",
+        "title": "确认简历解析结果",
+        "path": "/api/v1/resumes/{resumeId}/confirm",
+        "req_params": [
+          {
+            "name": "resumeId",
+            "desc": "简历 id",
+            "example": "res_001"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"description\": \"业务数据\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      }
+    ],
+    "index": 0,
+    "add_time": 1792494623,
+    "up_time": 1792494623
+  },
+  {
+    "name": "答辩材料与解析",
+    "desc": "F-36~F-40",
+    "list": [
+      {
+        "query_path": {
+          "path": "/api/v1/defense-materials",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "答辩材料与解析"
+        ],
+        "_id": 900022,
+        "method": "POST",
+        "title": "上传答辩材料",
+        "path": "/api/v1/defense-materials",
+        "req_params": [],
+        "req_body_form": [
+          {
+            "required": "1",
+            "name": "file",
+            "type": "file",
+            "desc": "答辩材料（PPT/PPTX/PDF/DOC/DOCX）"
+          }
+        ],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Content-Type",
+            "value": "multipart/form-data"
+          },
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "form",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"required\": [\"materialId\", \"status\"], \"properties\": {\"materialId\": {\"type\": \"string\"}, \"status\": {\"type\": \"string\", \"enum\": [\"uploaded\", \"queued\", \"processing\", \"review_required\", \"confirmed\", \"failed\"], \"title\": \"MaterialStatus\"}}, \"title\": \"MaterialVO\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/defense-materials",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "答辩材料与解析"
+        ],
+        "_id": 900023,
+        "method": "GET",
+        "title": "查询答辩材料列表",
+        "path": "/api/v1/defense-materials",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [
+          {
+            "required": "0",
+            "name": "cursor",
+            "desc": "分页游标",
+            "example": ""
+          }
+        ],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"required\": [\"items\", \"nextCursor\", \"hasMore\"], \"properties\": {\"items\": {\"type\": \"array\", \"items\": {\"type\": \"object\", \"required\": [\"materialId\", \"fileName\", \"status\"], \"properties\": {\"materialId\": {\"type\": \"string\"}, \"fileName\": {\"type\": \"string\"}, \"mimeType\": {\"type\": \"string\"}, \"status\": {\"type\": \"string\", \"enum\": [\"uploaded\", \"queued\", \"processing\", \"review_required\", \"confirmed\", \"failed\"], \"title\": \"MaterialStatus\"}, \"createdAt\": {\"type\": \"string\", \"format\": \"date-time\"}}, \"title\": \"Material\"}}, \"nextCursor\": {\"type\": \"string\"}, \"hasMore\": {\"type\": \"boolean\"}}, \"title\": \"PageResultMaterial\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/defense-materials/{materialId}",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "var",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "答辩材料与解析"
+        ],
+        "_id": 900024,
+        "method": "GET",
+        "title": "查询答辩材料详情",
+        "path": "/api/v1/defense-materials/{materialId}",
+        "req_params": [
+          {
+            "name": "materialId",
+            "desc": "材料 id",
+            "example": "mat_001"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"required\": [\"materialId\", \"fileName\", \"status\"], \"properties\": {\"materialId\": {\"type\": \"string\"}, \"fileName\": {\"type\": \"string\"}, \"mimeType\": {\"type\": \"string\"}, \"status\": {\"type\": \"string\", \"enum\": [\"uploaded\", \"queued\", \"processing\", \"review_required\", \"confirmed\", \"failed\"], \"title\": \"MaterialStatus\"}, \"createdAt\": {\"type\": \"string\", \"format\": \"date-time\"}}, \"title\": \"Material\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/defense-materials/{materialId}",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "var",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "答辩材料与解析"
+        ],
+        "_id": 900025,
+        "method": "DELETE",
+        "title": "删除答辩材料",
+        "path": "/api/v1/defense-materials/{materialId}",
+        "req_params": [
+          {
+            "name": "materialId",
+            "desc": "材料 id",
+            "example": "mat_001"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"description\": \"业务数据\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/defense-materials/{materialId}/parse",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "var",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "答辩材料与解析"
+        ],
+        "_id": 900026,
+        "method": "POST",
+        "title": "触发材料解析",
+        "path": "/api/v1/defense-materials/{materialId}/parse",
+        "req_params": [
+          {
+            "name": "materialId",
+            "desc": "材料 id",
+            "example": "mat_001"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"required\": [\"jobId\", \"status\"], \"properties\": {\"jobId\": {\"type\": \"string\"}, \"status\": {\"type\": \"string\", \"enum\": [\"queued\", \"processing\", \"review_required\", \"confirmed\", \"failed\"], \"title\": \"ParseJobStatus\"}}, \"title\": \"ParseJobVO\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/defense-materials/{materialId}/parse",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "var",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "答辩材料与解析"
+        ],
+        "_id": 900027,
+        "method": "GET",
+        "title": "查询材料解析结果",
+        "path": "/api/v1/defense-materials/{materialId}/parse",
+        "req_params": [
+          {
+            "name": "materialId",
+            "desc": "材料 id",
+            "example": "mat_001"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"required\": [\"status\"], \"properties\": {\"status\": {\"type\": \"string\", \"enum\": [\"queued\", \"processing\", \"review_required\", \"confirmed\", \"failed\"], \"title\": \"ParseJobStatus\"}, \"topic\": {\"type\": \"string\"}, \"outline\": {\"type\": \"array\", \"items\": {\"type\": \"object\", \"additionalProperties\": true, \"description\": \"结构未定的自由对象，联调前需具体化\", \"title\": \"FreeObject\"}, \"description\": \"【待确认】outline 元素结构未定（示例为字符串数组）\"}, \"keyPoints\": {\"type\": \"array\", \"items\": {\"type\": \"object\", \"additionalProperties\": true, \"description\": \"结构未定的自由对象，联调前需具体化\", \"title\": \"FreeObject\"}, \"description\": \"【待确认】keyPoints 元素结构未定\"}, \"methods\": {\"type\": \"array\", \"items\": {\"type\": \"object\", \"additionalProperties\": true, \"description\": \"结构未定的自由对象，联调前需具体化\", \"title\": \"FreeObject\"}, \"description\": \"【待确认】methods 元素结构未定\"}, \"results\": {\"type\": \"array\", \"items\": {\"type\": \"object\", \"additionalProperties\": true, \"description\": \"结构未定的自由对象，联调前需具体化\", \"title\": \"FreeObject\"}, \"description\": \"【待确认】results 元素结构未定\"}, \"possibleQuestions\": {\"type\": \"array\", \"items\": {\"type\": \"object\", \"additionalProperties\": true, \"description\": \"结构未定的自由对象，联调前需具体化\", \"title\": \"FreeObject\"}, \"description\": \"【待确认】possibleQuestions 元素结构未定（示例为字符串数组）\"}, \"warnings\": {\"type\": \"array\", \"items\": {\"type\": \"object\", \"additionalProperties\": true, \"description\": \"结构未定的自由对象，联调前需具体化\", \"title\": \"FreeObject\"}, \"description\": \"【待确认】warnings 元素结构未定\"}}, \"title\": \"MaterialParseVO\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/defense-materials/{materialId}/parsed-content",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "答辩材料与解析"
+        ],
+        "_id": 900028,
+        "method": "PATCH",
+        "title": "编辑材料解析内容",
+        "path": "/api/v1/defense-materials/{materialId}/parsed-content",
+        "req_params": [
+          {
+            "name": "materialId",
+            "desc": "材料 id",
+            "example": "mat_001"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"description\": \"业务数据\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "{\"type\": \"object\", \"properties\": {\"topic\": {\"type\": \"string\"}, \"outline\": {\"type\": \"array\", \"items\": {\"type\": \"object\", \"additionalProperties\": true, \"description\": \"结构未定的自由对象，联调前需具体化\", \"title\": \"FreeObject\"}}, \"keyPoints\": {\"type\": \"array\", \"items\": {\"type\": \"object\", \"additionalProperties\": true, \"description\": \"结构未定的自由对象，联调前需具体化\", \"title\": \"FreeObject\"}}, \"methods\": {\"type\": \"array\", \"items\": {\"type\": \"object\", \"additionalProperties\": true, \"description\": \"结构未定的自由对象，联调前需具体化\", \"title\": \"FreeObject\"}}, \"results\": {\"type\": \"array\", \"items\": {\"type\": \"object\", \"additionalProperties\": true, \"description\": \"结构未定的自由对象，联调前需具体化\", \"title\": \"FreeObject\"}}, \"possibleQuestions\": {\"type\": \"array\", \"items\": {\"type\": \"object\", \"additionalProperties\": true, \"description\": \"结构未定的自由对象，联调前需具体化\", \"title\": \"FreeObject\"}}}, \"description\": \"【待确认】字段元素结构与必填性未定\", \"title\": \"MaterialContentPatchDTO\"}",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/defense-materials/{materialId}/confirm",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "var",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "答辩材料与解析"
+        ],
+        "_id": 900029,
+        "method": "POST",
+        "title": "确认材料解析结果",
+        "path": "/api/v1/defense-materials/{materialId}/confirm",
+        "req_params": [
+          {
+            "name": "materialId",
+            "desc": "材料 id",
+            "example": "mat_001"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"description\": \"业务数据\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      }
+    ],
+    "index": 0,
+    "add_time": 1792494623,
+    "up_time": 1792494623
+  },
+  {
+    "name": "场景选择与会话",
+    "desc": "F-18~F-19、F-21~F-32、F-36~F-46",
+    "list": [
+      {
+        "query_path": {
+          "path": "/api/v1/sessions",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "场景选择与会话"
+        ],
+        "_id": 900030,
+        "method": "POST",
+        "title": "创建模拟会话",
+        "path": "/api/v1/sessions",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          },
+          {
+            "required": "0",
+            "name": "Idempotency-Key",
+            "value": "",
+            "desc": "创建操作的幂等键"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"required\": [\"sessionId\", \"mode\", \"scene\", \"status\", \"stage\"], \"properties\": {\"sessionId\": {\"type\": \"string\"}, \"mode\": {\"type\": \"string\", \"enum\": [\"interview\", \"defense\"], \"title\": \"SessionMode\"}, \"scene\": {\"type\": \"string\", \"enum\": [\"employment\", \"volunteer\", \"club\", \"thesis\", \"research\", \"course\"], \"description\": \"面试为 employment/volunteer/club，答辩为 thesis/research/course\", \"title\": \"Scene\"}, \"status\": {\"type\": \"string\", \"enum\": [\"active\", \"generating_report\", \"completed\", \"failed\", \"cancelled\"], \"description\": \"【待确认】cancelled 无对应取消接口，正在进行的会话如何取消未定义\", \"title\": \"SessionStatus\"}, \"stage\": {\"type\": \"string\", \"description\": \"当前阶段，取值见 InterviewStage / DefenseStage\"}, \"profileSnapshotVersion\": {\"type\": \"integer\"}, \"createdAt\": {\"type\": \"string\", \"format\": \"date-time\"}, \"firstPrompt\": {\"type\": \"string\", \"description\": \"AI 开场内容\"}}, \"title\": \"SessionCreateVO\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "{\"type\": \"object\", \"required\": [\"mode\", \"scene\", \"profileId\", \"modality\", \"clientSessionId\"], \"properties\": {\"mode\": {\"type\": \"string\", \"enum\": [\"interview\", \"defense\"], \"title\": \"SessionMode\"}, \"scene\": {\"type\": \"string\", \"enum\": [\"employment\", \"volunteer\", \"club\", \"thesis\", \"research\", \"course\"], \"description\": \"面试为 employment/volunteer/club，答辩为 thesis/research/course\", \"title\": \"Scene\"}, \"sceneConfig\": {\"type\": \"object\", \"description\": \"场景配置，如 targetRole/jobDescription/activityType/targetClub/defenseType/topic 【待确认】按 scene 细分字段并确定必填性\", \"properties\": {\"targetRole\": {\"type\": \"string\"}, \"jobDescription\": {\"type\": \"string\"}, \"activityType\": {\"type\": \"string\"}, \"targetClub\": {\"type\": \"string\"}, \"defenseType\": {\"type\": \"string\"}, \"topic\": {\"type\": \"string\"}}, \"title\": \"SceneConfig\"}, \"profileId\": {\"type\": \"string\"}, \"modality\": {\"type\": \"string\", \"enum\": [\"text\", \"voice\"], \"title\": \"Modality\"}, \"resumeId\": {\"type\": \"string\", \"description\": \"关联的简历 id，可选\"}, \"materialIds\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}, \"description\": \"关联的答辩材料 id 列表，可选\"}, \"clientSessionId\": {\"type\": \"string\", \"description\": \"客户端会话 id，用于幂等\"}}, \"title\": \"SessionCreateDTO\"}",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/sessions",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "场景选择与会话"
+        ],
+        "_id": 900031,
+        "method": "GET",
+        "title": "查询会话列表",
+        "path": "/api/v1/sessions",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [
+          {
+            "required": "0",
+            "name": "mode",
+            "desc": "模拟模式：interview/defense 枚举: interview/defense",
+            "example": ""
+          },
+          {
+            "required": "0",
+            "name": "status",
+            "desc": "会话状态 枚举: active/generating_report/completed/failed/cancelled",
+            "example": ""
+          },
+          {
+            "required": "0",
+            "name": "cursor",
+            "desc": "分页游标",
+            "example": ""
+          }
+        ],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"required\": [\"items\", \"nextCursor\", \"hasMore\"], \"properties\": {\"items\": {\"type\": \"array\", \"items\": {\"type\": \"object\", \"required\": [\"sessionId\", \"mode\", \"scene\", \"status\"], \"properties\": {\"sessionId\": {\"type\": \"string\"}, \"title\": {\"type\": \"string\"}, \"mode\": {\"type\": \"string\", \"enum\": [\"interview\", \"defense\"], \"title\": \"SessionMode\"}, \"scene\": {\"type\": \"string\", \"enum\": [\"employment\", \"volunteer\", \"club\", \"thesis\", \"research\", \"course\"], \"description\": \"面试为 employment/volunteer/club，答辩为 thesis/research/course\", \"title\": \"Scene\"}, \"status\": {\"type\": \"string\", \"enum\": [\"active\", \"generating_report\", \"completed\", \"failed\", \"cancelled\"], \"description\": \"【待确认】cancelled 无对应取消接口，正在进行的会话如何取消未定义\", \"title\": \"SessionStatus\"}, \"startedAt\": {\"type\": \"string\", \"format\": \"date-time\"}, \"endedAt\": {\"type\": \"string\", \"format\": \"date-time\"}, \"overallScore\": {\"type\": \"integer\", \"minimum\": 0, \"maximum\": 100, \"description\": \"综合得分，完成后返回\"}}, \"title\": \"SessionVO\"}}, \"nextCursor\": {\"type\": \"string\"}, \"hasMore\": {\"type\": \"boolean\"}}, \"title\": \"PageResultSession\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/sessions/{sessionId}",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "var",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "场景选择与会话"
+        ],
+        "_id": 900032,
+        "method": "GET",
+        "title": "查询会话详情",
+        "path": "/api/v1/sessions/{sessionId}",
+        "req_params": [
+          {
+            "name": "sessionId",
+            "desc": "会话 id",
+            "example": "sess_int_001"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"required\": [\"sessionId\", \"status\"], \"properties\": {\"sessionId\": {\"type\": \"string\"}, \"mode\": {\"type\": \"string\", \"enum\": [\"interview\", \"defense\"], \"title\": \"SessionMode\"}, \"scene\": {\"type\": \"string\", \"enum\": [\"employment\", \"volunteer\", \"club\", \"thesis\", \"research\", \"course\"], \"description\": \"面试为 employment/volunteer/club，答辩为 thesis/research/course\", \"title\": \"Scene\"}, \"sceneConfig\": {\"type\": \"object\", \"description\": \"场景配置，如 targetRole/jobDescription/activityType/targetClub/defenseType/topic 【待确认】按 scene 细分字段并确定必填性\", \"properties\": {\"targetRole\": {\"type\": \"string\"}, \"jobDescription\": {\"type\": \"string\"}, \"activityType\": {\"type\": \"string\"}, \"targetClub\": {\"type\": \"string\"}, \"defenseType\": {\"type\": \"string\"}, \"topic\": {\"type\": \"string\"}}, \"title\": \"SceneConfig\"}, \"profileSnapshotSummary\": {\"type\": \"object\", \"description\": \"画像快照摘要\"}, \"stage\": {\"type\": \"string\"}, \"status\": {\"type\": \"string\", \"enum\": [\"active\", \"generating_report\", \"completed\", \"failed\", \"cancelled\"], \"description\": \"【待确认】cancelled 无对应取消接口，正在进行的会话如何取消未定义\", \"title\": \"SessionStatus\"}, \"messagePageUrl\": {\"type\": \"string\", \"description\": \"消息分页入口\"}, \"reportStatus\": {\"type\": \"string\", \"enum\": [\"pending\", \"ready\", \"failed\"], \"title\": \"ReportStatus\"}}, \"title\": \"SessionDetailVO\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/sessions/{sessionId}",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "场景选择与会话"
+        ],
+        "_id": 900033,
+        "method": "PATCH",
+        "title": "修改会话（标题/交互形态）",
+        "path": "/api/v1/sessions/{sessionId}",
+        "req_params": [
+          {
+            "name": "sessionId",
+            "desc": "会话 id",
+            "example": "sess_int_001"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"description\": \"业务数据\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "{\"type\": \"object\", \"properties\": {\"title\": {\"type\": \"string\"}, \"modality\": {\"type\": \"string\", \"enum\": [\"text\", \"voice\"], \"title\": \"Modality\"}}, \"description\": \"【待确认】required 为空，允许空 body\", \"title\": \"SessionPatchDTO\"}",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/sessions/{sessionId}",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "var",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "场景选择与会话"
+        ],
+        "_id": 900034,
+        "method": "DELETE",
+        "title": "删除会话",
+        "path": "/api/v1/sessions/{sessionId}",
+        "req_params": [
+          {
+            "name": "sessionId",
+            "desc": "会话 id",
+            "example": "sess_int_001"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"description\": \"业务数据\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": "删除单条历史、消息及报告；正在进行的会话须先结束或取消"
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/sessions/{sessionId}/finish",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "场景选择与会话"
+        ],
+        "_id": 900035,
+        "method": "POST",
+        "title": "结束会话",
+        "path": "/api/v1/sessions/{sessionId}/finish",
+        "req_params": [
+          {
+            "name": "sessionId",
+            "desc": "会话 id",
+            "example": "sess_int_001"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"required\": [\"status\"], \"properties\": {\"status\": {\"type\": \"string\", \"enum\": [\"generating_report\", \"completed\"]}, \"reportId\": {\"type\": \"string\", \"description\": \"报告 id，生成中或已完成时返回\"}}, \"title\": \"SessionFinishVO\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "{\"type\": \"object\", \"required\": [\"reason\"], \"properties\": {\"reason\": {\"type\": \"string\", \"enum\": [\"user_end\", \"flow_complete\"]}}, \"title\": \"SessionFinishDTO\"}",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      }
+    ],
+    "index": 0,
+    "add_time": 1792494623,
+    "up_time": 1792494623
+  },
+  {
+    "name": "对话消息与流式 Agent",
+    "desc": "F-27~F-35、F-41~F-49",
+    "list": [
+      {
+        "query_path": {
+          "path": "/api/v1/sessions/{sessionId}/messages",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "对话消息与流式 Agent"
+        ],
+        "_id": 900036,
+        "method": "POST",
+        "title": "发送会话消息",
+        "path": "/api/v1/sessions/{sessionId}/messages",
+        "req_params": [
+          {
+            "name": "sessionId",
+            "desc": "会话 id",
+            "example": "sess_int_001"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"required\": [\"userMessageId\", \"responseId\", \"status\"], \"properties\": {\"userMessageId\": {\"type\": \"string\"}, \"responseId\": {\"type\": \"string\", \"description\": \"AI 响应 id，用于订阅 SSE\"}, \"status\": {\"type\": \"string\", \"enum\": [\"queued\", \"thinking\", \"generating\", \"completed\", \"failed\"], \"title\": \"MessageSendStatus\"}}, \"title\": \"MessageSendVO\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "{\"type\": \"object\", \"required\": [\"clientMessageId\", \"kind\", \"content\", \"inputMode\"], \"properties\": {\"clientMessageId\": {\"type\": \"string\", \"description\": \"客户端消息 id，重试不得重复推进阶段\"}, \"kind\": {\"type\": \"string\", \"enum\": [\"answer\", \"presentation\", \"question\", \"feedback\"], \"title\": \"MessageKind\"}, \"content\": {\"type\": \"string\"}, \"inputMode\": {\"type\": \"string\", \"enum\": [\"text\", \"voice\"], \"title\": \"Modality\"}, \"audioId\": {\"type\": \"string\", \"description\": \"音频 id，语音输入时返回\"}}, \"title\": \"MessageSendDTO\"}",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/sessions/{sessionId}/messages",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "var",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "对话消息与流式 Agent"
+        ],
+        "_id": 900037,
+        "method": "GET",
+        "title": "查询会话消息",
+        "path": "/api/v1/sessions/{sessionId}/messages",
+        "req_params": [
+          {
+            "name": "sessionId",
+            "desc": "会话 id",
+            "example": "sess_int_001"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [
+          {
+            "required": "0",
+            "name": "cursor",
+            "desc": "分页游标",
+            "example": ""
+          },
+          {
+            "required": "0",
+            "name": "limit",
+            "desc": "每页条数 1~50",
+            "example": ""
+          }
+        ],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"required\": [\"items\", \"nextCursor\", \"hasMore\"], \"properties\": {\"items\": {\"type\": \"array\", \"items\": {\"type\": \"object\", \"required\": [\"messageId\", \"sessionId\", \"seq\", \"role\", \"kind\", \"content\"], \"properties\": {\"messageId\": {\"type\": \"string\"}, \"sessionId\": {\"type\": \"string\"}, \"seq\": {\"type\": \"integer\"}, \"role\": {\"type\": \"string\", \"enum\": [\"user\", \"assistant\"], \"title\": \"MessageRole\"}, \"kind\": {\"type\": \"string\", \"enum\": [\"answer\", \"presentation\", \"question\", \"feedback\"], \"title\": \"MessageKind\"}, \"content\": {\"type\": \"string\"}, \"inputMode\": {\"type\": \"string\", \"enum\": [\"text\", \"voice\"], \"title\": \"Modality\"}, \"stage\": {\"type\": \"string\"}, \"createdAt\": {\"type\": \"string\", \"format\": \"date-time\"}, \"asrConfidence\": {\"type\": \"number\", \"description\": \"语音识别置信度\"}}, \"title\": \"Message\"}}, \"nextCursor\": {\"type\": \"string\"}, \"hasMore\": {\"type\": \"boolean\"}}, \"title\": \"PageResultMessage\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/sessions/{sessionId}/responses/{responseId}/events",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "var",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "对话消息与流式 Agent"
+        ],
+        "_id": 900038,
+        "method": "GET",
+        "title": "订阅 AI 响应流式事件（SSE）",
+        "path": "/api/v1/sessions/{sessionId}/responses/{responseId}/events",
+        "req_params": [
+          {
+            "name": "sessionId",
+            "desc": "会话 id",
+            "example": "sess_int_001"
+          },
+          {
+            "name": "responseId",
+            "desc": "AI 响应 id",
+            "example": "rsp_003"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"required\": [\"event\", \"data\"], \"properties\": {\"event\": {\"type\": \"string\", \"enum\": [\"queued\", \"thinking\", \"tool_started\", \"tool_finished\", \"stage_changed\", \"message_delta\", \"message_completed\", \"report_ready\", \"error\", \"done\"], \"title\": \"SSEEventType\"}, \"data\": {\"type\": \"object\", \"required\": [\"type\", \"responseId\", \"eventId\"], \"properties\": {\"type\": {\"type\": \"string\", \"enum\": [\"queued\", \"thinking\", \"tool_started\", \"tool_finished\", \"stage_changed\", \"message_delta\", \"message_completed\", \"report_ready\", \"error\", \"done\"], \"title\": \"SSEEventType\"}, \"responseId\": {\"type\": \"string\"}, \"eventId\": {\"type\": \"string\", \"description\": \"事件 id，可用于 Last-Event-ID 续传\"}, \"timestamp\": {\"type\": \"string\", \"format\": \"date-time\"}, \"data\": {\"type\": \"object\", \"description\": \"事件负载 【待确认】message_delta / report_ready / error 的具体负载结构未定义\"}}}}, \"title\": \"SSEEvent\"}",
+        "req_body_other": "",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      }
+    ],
+    "index": 0,
+    "add_time": 1792494623,
+    "up_time": 1792494623
+  },
+  {
+    "name": "评分报告与弱项",
+    "desc": "F-32~F-35、F-46~F-49",
+    "list": [
+      {
+        "query_path": {
+          "path": "/api/v1/sessions/{sessionId}/report",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "var",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "评分报告与弱项"
+        ],
+        "_id": 900039,
+        "method": "GET",
+        "title": "查询会话评分报告",
+        "path": "/api/v1/sessions/{sessionId}/report",
+        "req_params": [
+          {
+            "name": "sessionId",
+            "desc": "会话 id",
+            "example": "sess_int_001"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"required\": [\"reportId\", \"sessionId\", \"mode\", \"status\"], \"properties\": {\"reportId\": {\"type\": \"string\"}, \"sessionId\": {\"type\": \"string\"}, \"mode\": {\"type\": \"string\", \"enum\": [\"interview\", \"defense\"], \"title\": \"SessionMode\"}, \"status\": {\"type\": \"string\", \"enum\": [\"pending\", \"ready\", \"failed\"], \"title\": \"ReportStatus\"}, \"overallScore\": {\"type\": \"integer\", \"minimum\": 0, \"maximum\": 100}, \"dimensions\": {\"type\": \"array\", \"items\": {\"type\": \"object\", \"required\": [\"key\", \"label\", \"score\", \"evidence\"], \"properties\": {\"key\": {\"type\": \"string\", \"description\": \"维度 key\"}, \"label\": {\"type\": \"string\"}, \"score\": {\"type\": \"integer\", \"minimum\": 0, \"maximum\": 100}, \"evidence\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}, \"description\": \"支撑该评价的消息 id\"}, \"strengths\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}, \"issues\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}, \"suggestions\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}}, \"title\": \"ReportDimension\"}}, \"summary\": {\"type\": \"string\"}, \"actionItems\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}, \"weakPointTags\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}, \"generatedAt\": {\"type\": \"string\", \"format\": \"date-time\"}}, \"title\": \"Report\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/sessions/{sessionId}/weak-points",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "评分报告与弱项"
+        ],
+        "_id": 900040,
+        "method": "POST",
+        "title": "标记弱项",
+        "path": "/api/v1/sessions/{sessionId}/weak-points",
+        "req_params": [
+          {
+            "name": "sessionId",
+            "desc": "会话 id",
+            "example": "sess_int_001"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"required\": [\"weakPointId\", \"dimensionKey\"], \"properties\": {\"weakPointId\": {\"type\": \"string\"}, \"dimensionKey\": {\"type\": \"string\"}, \"messageIds\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}, \"note\": {\"type\": \"string\"}, \"createdAt\": {\"type\": \"string\", \"format\": \"date-time\"}}, \"description\": \"【待确认】缺 sessionId，无法在弱项列表中定位到具体会话\", \"title\": \"WeakPointVO\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "{\"type\": \"object\", \"required\": [\"dimensionKey\"], \"properties\": {\"dimensionKey\": {\"type\": \"string\"}, \"messageIds\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}, \"note\": {\"type\": \"string\"}}, \"title\": \"WeakPointCreateDTO\"}",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/weak-points",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "评分报告与弱项"
+        ],
+        "_id": 900041,
+        "method": "GET",
+        "title": "查询弱项列表",
+        "path": "/api/v1/weak-points",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [
+          {
+            "required": "0",
+            "name": "mode",
+            "desc": "模拟模式：interview/defense 枚举: interview/defense",
+            "example": ""
+          }
+        ],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"array\", \"items\": {\"type\": \"object\", \"required\": [\"weakPointId\", \"dimensionKey\"], \"properties\": {\"weakPointId\": {\"type\": \"string\"}, \"dimensionKey\": {\"type\": \"string\"}, \"messageIds\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}, \"note\": {\"type\": \"string\"}, \"createdAt\": {\"type\": \"string\", \"format\": \"date-time\"}}, \"description\": \"【待确认】缺 sessionId，无法在弱项列表中定位到具体会话\", \"title\": \"WeakPointVO\"}}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/weak-points/{weakPointId}",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "var",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "评分报告与弱项"
+        ],
+        "_id": 900042,
+        "method": "DELETE",
+        "title": "取消弱项标记",
+        "path": "/api/v1/weak-points/{weakPointId}",
+        "req_params": [
+          {
+            "name": "weakPointId",
+            "desc": "弱项 id",
+            "example": "wp_001"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"description\": \"业务数据\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      }
+    ],
+    "index": 0,
+    "add_time": 1792494623,
+    "up_time": 1792494623
+  },
+  {
+    "name": "长期记忆",
+    "desc": "F-57~F-60",
+    "list": [
+      {
+        "query_path": {
+          "path": "/api/v1/users/me/memory-settings",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "长期记忆"
+        ],
+        "_id": 900043,
+        "method": "GET",
+        "title": "查询长期记忆设置",
+        "path": "/api/v1/users/me/memory-settings",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"required\": [\"enabled\"], \"properties\": {\"enabled\": {\"type\": \"boolean\"}, \"retentionPolicy\": {\"type\": \"string\", \"description\": \"保留策略，待产品确认 【待确认】语义未定\"}}, \"title\": \"MemorySettingsVO\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/users/me/memory-settings",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "长期记忆"
+        ],
+        "_id": 900044,
+        "method": "PATCH",
+        "title": "修改长期记忆设置",
+        "path": "/api/v1/users/me/memory-settings",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"description\": \"业务数据\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "{\"type\": \"object\", \"required\": [\"enabled\"], \"properties\": {\"enabled\": {\"type\": \"boolean\"}}, \"title\": \"MemorySettingsPatchDTO\"}",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/users/me/memories",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "长期记忆"
+        ],
+        "_id": 900045,
+        "method": "GET",
+        "title": "查询长期记忆摘要",
+        "path": "/api/v1/users/me/memories",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"array\", \"items\": {\"type\": \"object\", \"required\": [\"memoryId\", \"content\"], \"properties\": {\"memoryId\": {\"type\": \"string\"}, \"content\": {\"type\": \"string\", \"description\": \"记忆摘要\"}, \"source\": {\"type\": \"string\", \"description\": \"来源，如会话 id\"}, \"createdAt\": {\"type\": \"string\", \"format\": \"date-time\"}}, \"description\": \"【待确认】字段未收敛：旧版用 summary，v2.0 用 content；source/createdAt 是否保留待确认\", \"title\": \"MemoryItemVO\"}}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/users/me/memories",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "长期记忆"
+        ],
+        "_id": 900046,
+        "method": "DELETE",
+        "title": "清除全部长期记忆",
+        "path": "/api/v1/users/me/memories",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"description\": \"业务数据\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      }
+    ],
+    "index": 0,
+    "add_time": 1792494623,
+    "up_time": 1792494623
+  },
+  {
+    "name": "语音",
+    "desc": "F-27、F-41、F-50~F-53",
+    "list": [
+      {
+        "query_path": {
+          "path": "/api/v1/speech/asr",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "语音"
+        ],
+        "_id": 900047,
+        "method": "POST",
+        "title": "语音识别（ASR）",
+        "path": "/api/v1/speech/asr",
+        "req_params": [],
+        "req_body_form": [
+          {
+            "required": "1",
+            "name": "audio",
+            "type": "file",
+            "desc": "音频文件"
+          },
+          {
+            "required": "0",
+            "name": "sessionId",
+            "type": "text",
+            "desc": "所属会话 id（可选）"
+          },
+          {
+            "required": "0",
+            "name": "language",
+            "type": "text",
+            "desc": ""
+          }
+        ],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Content-Type",
+            "value": "multipart/form-data"
+          },
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "form",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"required\": [\"audioId\", \"text\"], \"properties\": {\"audioId\": {\"type\": \"string\"}, \"text\": {\"type\": \"string\"}, \"confidence\": {\"type\": \"number\"}, \"durationMs\": {\"type\": \"integer\"}}, \"title\": \"AsrVO\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/v1/speech/tts",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [
+          "语音"
+        ],
+        "_id": 900048,
+        "method": "POST",
+        "title": "语音合成（TTS）",
+        "path": "/api/v1/speech/tts",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "required": "1",
+            "name": "Authorization",
+            "value": "Bearer {accessToken}",
+            "desc": "访问令牌"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\": \"object\", \"title\": \"R\", \"required\": [\"code\", \"message\", \"requestId\"], \"properties\": {\"code\": {\"type\": \"integer\", \"format\": \"int32\", \"description\": \"业务码，0 表示成功；失败时为字符串错误码\"}, \"message\": {\"type\": \"string\", \"description\": \"提示信息\"}, \"data\": {\"type\": \"object\", \"required\": [\"audioUrl\", \"durationMs\", \"expiresAt\"], \"properties\": {\"audioUrl\": {\"type\": \"string\"}, \"audioId\": {\"type\": \"string\"}, \"durationMs\": {\"type\": \"integer\"}, \"expiresAt\": {\"type\": \"string\", \"format\": \"date-time\"}}, \"title\": \"TtsVO\"}, \"requestId\": {\"type\": \"string\", \"description\": \"请求追踪 id\"}}}",
+        "req_body_other": "{\"type\": \"object\", \"required\": [\"text\"], \"properties\": {\"text\": {\"type\": \"string\"}, \"voiceId\": {\"type\": \"string\"}, \"speed\": {\"type\": \"number\"}}, \"title\": \"TtsDTO\"}",
+        "project_id": 0,
+        "catid": 0,
+        "uid": 0,
+        "add_time": 1792494623,
+        "up_time": 1792494623,
+        "__v": 0,
+        "desc": "",
+        "markdown": ""
+      }
+    ],
+    "index": 0,
+    "add_time": 1792494623,
+    "up_time": 1792494623
+  }
+]
