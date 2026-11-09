@@ -8,4 +8,8 @@
     <orderEntry type="jdk" jdkName="D:\HonoCareer\.venv" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
+  <component name="PyDocumentationSettings">
+    <option name="format" value="PLAIN" />
+  </component>
+  <component name="TestRunnerService" />
 </module>
