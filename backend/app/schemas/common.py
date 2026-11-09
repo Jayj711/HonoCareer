@@ -14,8 +14,8 @@ class Result(BaseModel,Generic[T]):
     def success(cls, data=None, request_id=""):
         return cls(code=0, message="success", data=data,requestId=request_id)
     @classmethod
-    def fail(cls, message="fail", request_id=""):
-        return cls(code=1, message=message, data=None,requestId=request_id)
+    def fail(cls, code, message="fail", request_id=""):
+        return cls(code=code, message=message, data=None,requestId=request_id)
 
 #分页返回类PageResult
 class PageResult(BaseModel,Generic[T]):

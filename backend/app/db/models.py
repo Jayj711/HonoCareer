@@ -14,11 +14,11 @@ class Users(Base):
 
     id: Mapped[int] = mapped_column(BIGINT,primary_key=True, comment="用户id")
     account: Mapped[str] = mapped_column(String(64), unique=True, nullable=False, comment="登录账号")
-    username: Mapped[str] = mapped_column(String(64), unique=True, nullable=False, comment="用户名")
+    username: Mapped[str] = mapped_column(String(64), unique=True, nullable=True, comment="用户名")
     password_hash: Mapped[str] = mapped_column(String(255), nullable=False, comment="密码哈希")
-    avatar_url: Mapped[str] = mapped_column(String(512), nullable=False, comment="头像图片 URL")
+    avatar_url: Mapped[str] = mapped_column(String(512), nullable=True, comment="头像图片 URL")
     phone: Mapped[str] = mapped_column(String(11), unique=True, nullable=True, comment="手机号")
-    email: Mapped[str] = mapped_column(String(64), unique=True, nullable=False, comment="邮箱")
+    email: Mapped[str] = mapped_column(String(64), unique=True, nullable=True, comment="邮箱")
     create_time: Mapped[datetime] = mapped_column(DateTime, server_default=func.now(), comment="创建时间")
     update_time: Mapped[datetime] = mapped_column(DateTime, server_default=func.now(), onupdate=func.now(), comment="修改时间")
 
@@ -30,7 +30,7 @@ class RefreshTokens(Base):
     token: Mapped[str] = mapped_column(String(255), nullable=False, comment="刷新令牌")
     client_type: Mapped[str] = mapped_column(String(16), nullable=False, comment="客户端类型")
     expires_time: Mapped[datetime] = mapped_column(DateTime, nullable=False, comment="过期时间")
-    revoked_time: Mapped[datetime] = mapped_column(DateTime, nullable=False, comment="登出时置信，实现logout失效")
+    revoked_time: Mapped[datetime] = mapped_column(DateTime, nullable=True, comment="登出时置信，实现logout失效")
     create_time: Mapped[datetime] = mapped_column(DateTime, server_default=func.now(), comment="创建时间")
 
 class Profiles(Base):

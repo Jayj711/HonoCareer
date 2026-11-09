@@ -16,6 +16,7 @@ class Settings(BaseSettings):
     # JWT
     secret_key: str = "change-me"
     access_token_expire_minutes: int = 1440
+    refresh_token_expire_days: int = 30
 
     # DeepSeek
     deepseek_api_key: str = ""
