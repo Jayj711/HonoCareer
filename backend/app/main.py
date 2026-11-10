@@ -1,11 +1,12 @@
 """FastAPI 启动入口，注册所有接口。"""
 from fastapi import FastAPI, Request
+from fastapi.exceptions import RequestValidationError
 from fastapi.openapi.docs import get_redoc_html, get_swagger_ui_html
 from fastapi.responses import JSONResponse
 
-from app.api import auth, users
+from app.api import auth, defense_materials, profiles, resumes, sessions, users
 from app.config import setup_logging
-from app.core.error import BizError
+from app.core.error import BizError, ErrorCode
 from app.schemas.common import Result
 
 setup_logging()
@@ -53,9 +54,26 @@ async def biz_error_handler(request: Request, exc: BizError):
     )
 
 
+@app.exception_handler(RequestValidationError)
+async def validation_error_handler(request: Request, exc: RequestValidationError):
+    """参数校验失败（FastAPI 默认 422）统一转成 code=40001 的 Result 结构。"""
+    # 取第一条错误的字段路径（如 body.password / query.type）拼进 message，方便定位
+    errors = exc.errors()
+    loc = ".".join(str(x) for x in errors[0].get("loc", [])) if errors else ""
+    message = f"参数错误: {loc}" if loc else "参数错误"
+    return JSONResponse(
+        status_code=200,
+        content=Result.fail(ErrorCode.PARAM_ERROR, message).model_dump(),
+    )
+
+
 # 挂载鉴权与用户路由
 app.include_router(auth.router)
 app.include_router(users.router)
+app.include_router(profiles.router)
+app.include_router(resumes.router)
+app.include_router(defense_materials.router)
+app.include_router(sessions.router)
 
 
 @app.get("/health")

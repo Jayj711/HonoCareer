@@ -15,6 +15,9 @@ venv/
 *.sqlite
 *.sqlite3
 
+# 用户上传的文件（简历/材料等，运行时生成，不入库）
+backend/uploads/
+
 # 测试与缓存
 .pytest_cache/
 .mypy_cache/
