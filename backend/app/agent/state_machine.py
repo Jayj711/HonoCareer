@@ -1,80 +1,94 @@
-"""面试/答辩阶段状态机。
+"""阶段推进状态机（纯函数，落库由 service 负责）。
 
-状态对象用 Pydantic 建模并提供 to_dict / from_dict，当前只做内存态，
-后续接数据库时只需追加 save / load，不必重写状态机。
+阶段 6 起，会话阶段从内存态改为入库：当前阶段存在 ``sessions.stage``，
+历史在 ``messages``，提问数从 assistant 的 question 消息计数推导。
+因此这里只保留「纯函数」的推进规则，不再持有内存历史。
 """
-from enum import Enum
-from typing import Any
+from app.schemas.message import DefenseStage, InterviewStage, MessageKind
 
-from pydantic import BaseModel, Field
-
-
-class SessionType(str, Enum):
-    INTERVIEW = "interview"  # 面试
-    DEFENSE = "defense"  # 答辩
+# 每轮提问上限：questioning 阶段问满即进入总结
+MAX_QUESTIONS = 3
 
 
-class Phase(str, Enum):
-    GREETING = "greeting"  # 开场寒暄、确认目标
-    INTERVIEWING = "interviewing"  # 提问
-    FOLLOWUP = "followup"  # 追问
-    SUMMARIZING = "summarizing"  # 总结反馈
-    ENDED = "ended"  # 结束
+def decide_turn(
+    mode: str, current_stage: str, question_count: int, max_questions: int = MAX_QUESTIONS
+) -> tuple[str, str, str]:
+    """根据当前阶段与已提问数，决定本轮 (阶段, assistant 消息 kind, 下一阶段)。
+
+    返回三元组：
+    - 本轮所处阶段（用于生成 Prompt 与落 assistant 消息的 stage）
+    - 本轮 assistant 消息的 kind（question / feedback）
+    - 本轮结束后的下一阶段（写回 sessions.stage）
+    """
+    if mode == "interview":
+        if current_stage == InterviewStage.opening.value:
+            return (
+                InterviewStage.opening.value,
+                MessageKind.question.value,
+                InterviewStage.questioning.value,
+            )
+        if current_stage == InterviewStage.questioning.value:
+            if question_count >= max_questions:
+                return (
+                    InterviewStage.summary.value,
+                    MessageKind.feedback.value,
+                    InterviewStage.ended.value,
+                )
+            return (
+                InterviewStage.questioning.value,
+                MessageKind.question.value,
+                InterviewStage.questioning.value,
+            )
+        if current_stage == InterviewStage.summary.value:
+            return (
+                InterviewStage.summary.value,
+                MessageKind.feedback.value,
+                InterviewStage.ended.value,
+            )
+        return (
+            InterviewStage.ended.value,
+            MessageKind.feedback.value,
+            InterviewStage.ended.value,
+        )
+
+    # defense
+    if current_stage == DefenseStage.opening.value:
+        return (
+            DefenseStage.opening.value,
+            MessageKind.question.value,
+            DefenseStage.presentation.value,
+        )
+    if current_stage == DefenseStage.presentation.value:
+        return (
+            DefenseStage.presentation.value,
+            MessageKind.question.value,
+            DefenseStage.questioning.value,
+        )
+    if current_stage == DefenseStage.questioning.value:
+        if question_count >= max_questions:
+            return (
+                DefenseStage.summary.value,
+                MessageKind.feedback.value,
+                DefenseStage.ended.value,
+            )
+        return (
+            DefenseStage.questioning.value,
+            MessageKind.question.value,
+            DefenseStage.questioning.value,
+        )
+    if current_stage == DefenseStage.summary.value:
+        return (
+            DefenseStage.summary.value,
+            MessageKind.feedback.value,
+            DefenseStage.ended.value,
+        )
+    return (
+        DefenseStage.ended.value,
+        MessageKind.feedback.value,
+        DefenseStage.ended.value,
+    )
 
 
-class InterviewState(BaseModel):
-    """会话状态，可序列化，便于后续落库。"""
-
-    session_id: str
-    session_type: SessionType = SessionType.INTERVIEW
-    phase: Phase = Phase.GREETING
-    question_index: int = 0
-    max_questions: int = 3
-    history: list[dict[str, str]] = Field(default_factory=list)
-
-    def to_dict(self) -> dict[str, Any]:
-        """序列化为 JSON 兼容的 dict。"""
-        return self.model_dump(mode="json")
-
-    @classmethod
-    def from_dict(cls, data: dict[str, Any]) -> "InterviewState":
-        """从 dict 反序列化。"""
-        return cls.model_validate(data)
-
-
-class InterviewStateMachine:
-    """驱动状态在阶段间流转。"""
-
-    def __init__(self, state: InterviewState) -> None:
-        self.state = state
-
-    @property
-    def phase(self) -> Phase:
-        return self.state.phase
-
-    def record_user(self, content: str) -> None:
-        self.state.history.append({"role": "user", "content": content})
-
-    def record_assistant(self, content: str) -> None:
-        self.state.history.append({"role": "assistant", "content": content})
-        if self.state.phase == Phase.INTERVIEWING:
-            self.state.question_index += 1
-
-    def advance(self) -> Phase:
-        """根据当前阶段推进到下一阶段（INTERVIEWING 阶段问满才收尾）。"""
-        phase = self.state.phase
-        if phase == Phase.GREETING:
-            self.state.phase = Phase.INTERVIEWING
-        elif phase == Phase.INTERVIEWING:
-            if self.state.question_index >= self.state.max_questions:
-                self.state.phase = Phase.SUMMARIZING
-        elif phase == Phase.FOLLOWUP:
-            self.state.phase = Phase.INTERVIEWING
-        elif phase == Phase.SUMMARIZING:
-            self.state.phase = Phase.ENDED
-        # ENDED 保持不变
-        return self.state.phase
-
-    def go_followup(self) -> None:
-        """进入追问阶段（当前由外部判断触发）。"""
-        self.state.phase = Phase.FOLLOWUP
+def is_ended(stage: str) -> bool:
+    """判断阶段是否已结束。"""
+    return stage in (InterviewStage.ended.value, DefenseStage.ended.value)

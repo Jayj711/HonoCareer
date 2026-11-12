@@ -4,7 +4,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.openapi.docs import get_redoc_html, get_swagger_ui_html
 from fastapi.responses import JSONResponse
 
-from app.api import auth, defense_materials, profiles, resumes, sessions, users
+from app.api import auth, defense_materials, messages, profiles, resumes, sessions, users
 from app.config import setup_logging
 from app.core.error import BizError, ErrorCode
 from app.schemas.common import Result
@@ -74,6 +74,7 @@ app.include_router(profiles.router)
 app.include_router(resumes.router)
 app.include_router(defense_materials.router)
 app.include_router(sessions.router)
+app.include_router(messages.router)
 
 
 @app.get("/health")
