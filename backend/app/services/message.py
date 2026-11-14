@@ -9,7 +9,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.agent.orchestrator import run_response
 from app.core.error import BizError, ErrorCode
 from app.db import AsyncSessionFactory
-from app.db.models import Messages, ResponseEvents, Responses
+from app.db.models import Audios, Messages, ResponseEvents, Responses
 from app.schemas.common import PageResult
 from app.schemas.message import (
     MessageKind,
@@ -60,6 +60,24 @@ def _schedule(session_id: int, user_message_id: int, response_id: int) -> None:
     task.add_done_callback(_background_tasks.discard)
 
 
+async def _resolve_asr_confidence(
+    db: AsyncSession, user_id: int, audio_id: str | None, input_mode: str
+) -> float | None:
+    """voice 消息带 audioId 时从 Audios 回填识别置信度；查不到则留空，不阻断发送。"""
+    if input_mode != "voice" or not audio_id:
+        return None
+    try:
+        aid = int(audio_id)
+    except (TypeError, ValueError):
+        return None
+    audio = (
+        await db.execute(
+            select(Audios).where(Audios.id == aid, Audios.user_id == user_id)
+        )
+    ).scalar_one_or_none()
+    return audio.confidence if audio else None
+
+
 async def send_message(
     db: AsyncSession, user_id: int, session_id: int, dto: MessageSendDTO
 ) -> MessageSendVO:
@@ -91,6 +109,9 @@ async def send_message(
         )
 
     # 落库 user 消息
+    asr_confidence = await _resolve_asr_confidence(
+        db, user_id, dto.audioId, dto.inputMode.value
+    )
     user_msg = Messages(
         session_id=session_id,
         seq=await _next_seq(db, session_id),
@@ -99,7 +120,7 @@ async def send_message(
         content=dto.content,
         input_mode=dto.inputMode.value,
         audio_id=dto.audioId,
-        asr_confidence=None,
+        asr_confidence=asr_confidence,
         stage=session.stage,
         client_message_id=dto.clientMessageId,
     )

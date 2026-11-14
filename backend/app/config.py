@@ -23,6 +23,13 @@ class Settings(BaseSettings):
     deepseek_base_url: str = "https://api.deepseek.com"
     deepseek_model: str = "deepseek-chat"
 
+    # 阿里云智能语音交互（NLS）
+    aliyun_ak_id: str = ""
+    aliyun_ak_secret: str = ""
+    aliyun_nls_appkey: str = ""
+    aliyun_nls_endpoint: str = "nls-gateway-cn-shanghai.aliyuncs.com"
+    aliyun_nls_meta_endpoint: str = "nls-meta.cn-shanghai.aliyuncs.com"
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",

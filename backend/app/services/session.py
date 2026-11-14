@@ -8,12 +8,14 @@ from app.core.error import BizError, ErrorCode
 from app.db.models import (
     DefenseMaterials,
     Profiles,
+    Reports,
     Resumes,
     SessionMaterials,
     Sessions,
 )
 from app.schemas.common import PageResult
 from app.schemas.session import (
+    ReportStatus,
     Scene,
     SessionCreateDTO,
     SessionCreateVO,
@@ -25,6 +27,7 @@ from app.schemas.session import (
     SessionStatus,
     SessionVO,
 )
+from app.services.report import schedule_report
 
 PAGE_SIZE = 20
 
@@ -292,11 +295,18 @@ async def delete_session(db: AsyncSession, user_id: int, session_id: int) -> Non
 async def finish_session(
     db: AsyncSession, user_id: int, session_id: int, dto: SessionFinishDTO
 ) -> SessionFinishVO:
-    """结束会话：active -> completed（报告生成留到阶段 7，届时先置 generating_report）。"""
+    """结束会话：active -> generating_report，后台异步生成评分报告（阶段 7）。"""
     session = await _get_owned_session(db, user_id, session_id)
     if session.status != SessionStatus.active.value:
         raise BizError(ErrorCode.PARAM_ERROR, "会话不在进行中，无法结束")
-    session.status = SessionStatus.completed.value
+    report = Reports(session_id=session.id, status=ReportStatus.pending.value)
+    db.add(report)
+    await db.flush()  # 拿 report.id
+    session.status = SessionStatus.generating_report.value
+    session.report_status = ReportStatus.pending.value
     session.end_time = datetime.now()
     await db.commit()
-    return SessionFinishVO(status=SessionStatus.completed, reportId=None)
+    schedule_report(session.id, report.id)
+    return SessionFinishVO(
+        status=SessionStatus.generating_report, reportId=str(report.id)
+    )
