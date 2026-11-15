@@ -1,13 +1,13 @@
 """简历服务：上传、解析、编辑、确认、删除。"""
 import secrets
 import uuid
-from pathlib import Path
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.error import BizError, ErrorCode
 from app.db.models import Resumes
+from app.oss.client import OssClient, require_client
 from app.parsers import resume as resume_parser
 from app.schemas.common import PageResult
 from app.schemas.resume import (
@@ -20,11 +20,6 @@ from app.schemas.resume import (
 
 PAGE_SIZE = 20
 MAX_FILE_SIZE = 10 * 1024 * 1024  # 单个简历最大 10MB
-
-# 上传根目录：backend/uploads/resumes（相对 backend 根，避免受启动时 CWD 影响）
-_BACKEND_ROOT = Path(__file__).resolve().parents[2]
-UPLOAD_DIR = _BACKEND_ROOT / "uploads" / "resumes"
-UPLOAD_DIR_REL = "uploads/resumes"
 
 
 def _to_dto(r: Resumes) -> ResumeDTO:
@@ -64,15 +59,14 @@ async def upload_resume(
     if len(content) > MAX_FILE_SIZE:
         raise BizError(ErrorCode.PARAM_ERROR, "简历文件过大，最大 10MB")
 
-    # 落盘：用随机文件名避免路径冲突 / 覆盖
-    UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
-    stored_name = f"{uuid.uuid4().hex}{ext}"
-    (UPLOAD_DIR / stored_name).write_bytes(content)
+    # 存 OSS：对象键用随机文件名避免路径冲突 / 覆盖
+    key = f"resumes/{uuid.uuid4().hex}{ext}"
+    await require_client().put_object(key, content, mime_type)
 
     resume = Resumes(
         user_id=user_id,
         file_name=file_name,
-        file_url=f"{UPLOAD_DIR_REL}/{stored_name}",
+        file_url=key,
         mime_type=mime_type,
         size=len(content),
         status="uploaded",
@@ -124,10 +118,12 @@ async def get_resume(db: AsyncSession, user_id: int, resume_id: int) -> ResumeDT
 async def delete_resume(db: AsyncSession, user_id: int, resume_id: int) -> None:
     """删除简历：删记录 + 删磁盘文件（尽力而为）。"""
     resume = await _get_owned_resume(db, user_id, resume_id)
-    try:
-        (_BACKEND_ROOT / resume.file_url).unlink(missing_ok=True)
-    except OSError:
-        pass  # 文件已不存在或不可删，不阻断删除记录
+    oss = OssClient()
+    if oss.configured:
+        try:
+            await oss.delete_object(resume.file_url)
+        except BizError:
+            pass  # OSS 删除失败不阻断删记录（尽力而为）
     await db.delete(resume)
     await db.commit()
 
@@ -135,11 +131,12 @@ async def delete_resume(db: AsyncSession, user_id: int, resume_id: int) -> None:
 async def trigger_parse(db: AsyncSession, user_id: int, resume_id: int) -> ParseJobVO:
     """触发解析（同步）：抽文本 -> LLM 结构化 -> 落库，状态 review_required / failed。"""
     resume = await _get_owned_resume(db, user_id, resume_id)
+    oss = require_client()  # OSS 未配置 → 50001，提前返回
     job_id = secrets.token_urlsafe(16)
     resume.parse_job_id = job_id
 
     try:
-        content = (_BACKEND_ROOT / resume.file_url).read_bytes()
+        content = await oss.get_object(resume.file_url)
         text = resume_parser.extract_text(resume.file_name, content)
         if not text.strip():
             resume.status = "failed"

@@ -7,11 +7,15 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.error import BizError, ErrorCode
 from app.db.models import (
     DefenseMaterials,
+    Messages,
     Profiles,
     Reports,
+    ResponseEvents,
+    Responses,
     Resumes,
     SessionMaterials,
     Sessions,
+    WeakPoints,
 )
 from app.schemas.common import PageResult
 from app.schemas.session import (
@@ -283,8 +287,22 @@ async def patch_session(
 
 
 async def delete_session(db: AsyncSession, user_id: int, session_id: int) -> None:
-    """删除会话：先清关联材料，再删会话（避免外键约束阻断删除）。"""
+    """删除会话：显式清理全部子表（外键无 ondelete 级联），再删会话本体。
+
+    顺序：response_events → responses → messages → reports → weak_points
+    → session_materials → session，否则 MySQL 外键约束会阻断删除报 500。
+    """
     session = await _get_owned_session(db, user_id, session_id)
+
+    # response_events 经 response_id 挂在 responses 下，先按 response 子查询删
+    resp_ids = select(Responses.id).where(Responses.session_id == session_id)
+    await db.execute(
+        delete(ResponseEvents).where(ResponseEvents.response_id.in_(resp_ids))
+    )
+    await db.execute(delete(Responses).where(Responses.session_id == session_id))
+    await db.execute(delete(Messages).where(Messages.session_id == session_id))
+    await db.execute(delete(Reports).where(Reports.session_id == session_id))
+    await db.execute(delete(WeakPoints).where(WeakPoints.session_id == session_id))
     await db.execute(
         delete(SessionMaterials).where(SessionMaterials.session_id == session_id)
     )
@@ -295,8 +313,26 @@ async def delete_session(db: AsyncSession, user_id: int, session_id: int) -> Non
 async def finish_session(
     db: AsyncSession, user_id: int, session_id: int, dto: SessionFinishDTO
 ) -> SessionFinishVO:
-    """结束会话：active -> generating_report，后台异步生成评分报告（阶段 7）。"""
+    """结束会话：active -> generating_report，后台异步生成评分报告（阶段 7）。
+
+    幂等：已处于 generating_report / completed 的会话，重试直接返回既有报告，
+    不重复生成（弱网重试安全）。
+    """
     session = await _get_owned_session(db, user_id, session_id)
+
+    # 幂等返回：报告已在生成或已生成，重试返回原报告
+    if session.status in (
+        SessionStatus.generating_report.value,
+        SessionStatus.completed.value,
+    ):
+        report = (
+            await db.execute(select(Reports).where(Reports.session_id == session_id))
+        ).scalar_one_or_none()
+        return SessionFinishVO(
+            status=SessionStatus(session.status),
+            reportId=str(report.id) if report is not None else None,
+        )
+
     if session.status != SessionStatus.active.value:
         raise BizError(ErrorCode.PARAM_ERROR, "会话不在进行中，无法结束")
     report = Reports(session_id=session.id, status=ReportStatus.pending.value)

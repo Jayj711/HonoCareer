@@ -9,7 +9,8 @@ from app.agent.orchestrator import _load_context
 from app.agent.tools.scorecard import generate_scorecard
 from app.core.error import BizError, ErrorCode
 from app.db import AsyncSessionFactory
-from app.db.models import Messages, Reports, Sessions
+from app.db.models import Messages, Reports, ResponseEvents, Responses, Sessions
+from app.schemas.message import SSEEventType
 from app.schemas.report import ReportDimensionVO, ReportVO
 from app.schemas.session import ReportStatus, SessionStatus
 from app.services.memory import sync_memories_from_session
@@ -110,6 +111,26 @@ async def run_report(session_id: int, report_id: int) -> None:
             session.report_status = ReportStatus.ready.value
             session.status = SessionStatus.completed.value
             await sync_memories_from_session(db, session, transcript)
+
+            # 补发 report_ready SSE 事件：挂到该会话最新一条 response 的事件流，
+            # 客户端订阅时可被推送（无 response 的会话靠轮询 GET /report 兜底）。
+            last_resp_id = (
+                await db.execute(
+                    select(Responses.id)
+                    .where(Responses.session_id == session_id)
+                    .order_by(Responses.id.desc())
+                    .limit(1)
+                )
+            ).scalar_one_or_none()
+            if last_resp_id is not None:
+                db.add(
+                    ResponseEvents(
+                        response_id=last_resp_id,
+                        type=SSEEventType.report_ready.value,
+                        data={"sessionId": str(session_id), "reportId": str(report_id)},
+                    )
+                )
+
             await db.commit()
     except Exception:  # noqa: BLE001 —— 后台任务必须兜底，不能让异常静默
         try:

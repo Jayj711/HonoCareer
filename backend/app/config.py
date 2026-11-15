@@ -30,6 +30,12 @@ class Settings(BaseSettings):
     aliyun_nls_endpoint: str = "nls-gateway-cn-shanghai.aliyuncs.com"
     aliyun_nls_meta_endpoint: str = "nls-meta.cn-shanghai.aliyuncs.com"
 
+    # 阿里云对象存储（OSS）
+    aliyun_oss_access_key_id: str = ""
+    aliyun_oss_access_key_secret: str = ""
+    aliyun_oss_endpoint: str = "oss-cn-shanghai.aliyuncs.com"
+    aliyun_oss_bucket: str = ""
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",

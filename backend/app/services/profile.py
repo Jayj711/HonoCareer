@@ -3,7 +3,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.error import BizError, ErrorCode
-from app.db.models import Profiles, Resumes
+from app.db.models import Profiles, Resumes, Sessions
 from app.schemas.common import PageResult
 from app.schemas.profile import (
     BaseInfo,
@@ -144,8 +144,17 @@ async def update_profile(db: AsyncSession, user_id: int, profile_id: int, dto: P
 
 
 async def delete_profile(db: AsyncSession, user_id: int, profile_id: int) -> None:
-    """删除画像。"""
+    """删除画像：被会话引用时阻止删除（sessions.profile_id 外键无级联，否则报 500）。"""
     profile = await _get_owned_profile(db, user_id, profile_id)
+
+    used = (
+        await db.execute(
+            select(Sessions.id).where(Sessions.profile_id == profile_id).limit(1)
+        )
+    ).scalar_one_or_none()
+    if used is not None:
+        raise BizError(ErrorCode.CONFLICT, "画像已被会话使用，无法删除")
+
     await db.delete(profile)
     await db.commit()
 
